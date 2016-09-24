@@ -105,7 +105,7 @@ void RunCursorList(char* filename)
 
 void RunStackAr(char* filename)
 {
-  StackAr<int> stackAr;
+  StackAr<int> stackAr(500001);
 
   char temp = ' ', s[256];
   int i = 0;
