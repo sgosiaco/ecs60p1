@@ -80,27 +80,45 @@ void RunList(char* filename)
   inf.close();
 }
 
-void RunCursorList(string filename)
+void RunCursorList(char* filename)
+{
+  CursorList<int> cursorList(cursorSpace);
+
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      cursorList.insert(i, cursorList.zeroth());
+    else
+      if(temp == 'd')
+        cursorList.remove(i);
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
+}
+
+void RunStackAr(char* filename)
 {
 
 }
 
-void RunStackAr(string filename)
+void RunStackLi(char* filename)
 {
 
 }
 
-void RunStackLi(string filename)
+void RunQueueAr(char* filename)
 {
 
 }
 
-void RunQueueAr(string filename)
-{
-
-}
-
-void RunSkipList(string filename)
+void RunSkipList(char* filename)
 {
 
 }
