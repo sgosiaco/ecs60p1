@@ -105,12 +105,48 @@ void RunCursorList(char* filename)
 
 void RunStackAr(char* filename)
 {
+  StackAr<int> stackAr;
 
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      stackAr.push(i);
+    else
+      if(temp == 'd')
+        stackAr.pop();
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
 }
 
 void RunStackLi(char* filename)
 {
+  StackLi<int> stackLi;
 
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      stackLi.push(i);
+    else
+      if(temp == 'd')
+        stackLi.pop();
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
 }
 
 void RunQueueAr(char* filename)
