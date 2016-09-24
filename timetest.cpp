@@ -1,4 +1,3 @@
-#include "CPUTimer.h"
 #include <fstream>
 #include <iostream>
 #include <climits>
@@ -6,7 +5,18 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include "CPUTimer.h"
+#include "LinkedList.h"
+#include "CursorList.h"
+#include "StackAr.h"
+#include "StackLi.h"
+#include "QueueAr.h"
+#include "SkipList.h"
+#include "vector.h"
+
 using namespace std;
+
+vector<CursorNode <int> > cursorSpace(500001);
 
 const int TEN = 10;
 const int ASCII_ZERO = '0';
@@ -47,9 +57,27 @@ int getNumber()
 } // getNumber()
 
 
-void RunList(string filename)
+void RunList(char* filename)
 {
+  List<int> list;
 
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      list.insert(i, list.zeroth());
+    else
+      if(temp == 'd')
+        list.remove(i);
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
 }
 
 void RunCursorList(string filename)
@@ -77,17 +105,33 @@ void RunSkipList(string filename)
 
 }
 
+void menu()
+{
+  cout << endl;
+  cout << "      ADT Menu" << endl;
+  cout << "0. Quit" << endl;
+  cout << "1. LinkedList" << endl;
+  cout << "2. CursorList" << endl;
+  cout << "3. StackAr" << endl;
+  cout << "4. StackLi" << endl;
+  cout << "5. QueueAr" << endl;
+  cout << "6. SkipList" << endl;
+  cout << "Your choice >> ";
+}
+
 
 int main(int argc, char** argv)
 {
-  char temp;
-  char s[256];
-  string filename = argv[1];
-  int i = 0, choice = 0;
+  char* filename = new char[256];
+  int choice = 0;
   CPUTimer ct;
 
+  cout << "Filename >> ";
+  cin >> filename;
+  cin.ignore(256, '\n');
   do
   {
+    menu();
     choice = getNumber();
     ct.reset();
     switch (choice)
@@ -102,27 +146,4 @@ int main(int argc, char** argv)
 
     cout << "CPU time: " << ct.cur_CPUTime() << endl;
   } while(choice > 0);
-
-
-  //File handling stuff
-
-  if(!(argc > 1))
-  {
-    cout << "TEMP ERROR" << endl;
-    return -1;
-  }
-
-  ifstream inf(argv[1]);
-  inf.ignore(256, '\n');
-  while(inf.getline(s, 256, ' '))
-  {
-    temp = *s;
-    s[0] = ' ';
-    i = atoi(s);
-    cout << s << " " << i << endl;
-  }
-
-  inf.close();
-
-  //End file handling stuff
 }
