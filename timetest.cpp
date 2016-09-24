@@ -151,12 +151,48 @@ void RunStackLi(char* filename)
 
 void RunQueueAr(char* filename)
 {
+  Queue<int> queue(500001);
 
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      queue.enqueue(i);
+    else
+      if(temp == 'd')
+        queue.dequeue();
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
 }
 
 void RunSkipList(char* filename)
 {
+  SkipList<int> skipList(-1, 500001);
 
+  char temp = ' ', s[256];
+  int i = 0;
+  ifstream inf(filename);
+  inf.ignore(256, '\n');
+  while(inf.getline(s, 256, ' '))
+  {
+    temp = *s;
+    s[0] = ' ';
+    i = atoi(s);
+    if(temp == 'i')
+      skipList.insert(i);
+    else
+      if(temp == 'd')
+        skipList.deleteNode(i);
+    //cout << temp << " " << i << endl;
+  }
+  inf.close();
 }
 
 void menu()
