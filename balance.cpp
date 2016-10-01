@@ -32,7 +32,7 @@ void RunListString(char* filename)
   StackLi<int> count;
 
   char s = ' ';
-  int i = 1, comment = 0;
+  int i = 1, comment = 0, asterix = 0;
   ifstream inf(filename);
   while(inf.get(s))
   {
@@ -41,63 +41,61 @@ void RunListString(char* filename)
       return;
     if(s == '\n')
       i++;
-    if(s == '(' || s == '{' || s == '[' || s == '/')
+    if(s == '(' || s == '{' || s == '[' || s == '/' || s == '*')
     {
       if(comment == 0)
       {
         if(s == '/')
+          comment = 1;
+        if(s != '*')
         {
-          inf.get(s);
-          if(s == '*')
+          stackLi.push(s);
+          count.push(i);
+        }
+      }
+      else
+      {
+        //cout << "FIRST " << s << ' ' << stackLi.top() << endl;
+        if(s == '*' && stackLi.top() == '/')
+        {
+          while(inf.get(s))
           {
-            comment = 1;
-            stackLi.push(s);
-            count.push(i);
-          }
-          else
-          {
-            if(s == '(' || s == '{' || s == '[')
+            //cout << 'W' << s << ' ' << asterix << endl;
+            if(s == '*')
+              asterix = 1;
+            else
             {
-              stackLi.push(s);
-              count.push(i);
+              if(asterix == 1 && s == '/')
+              {
+                asterix = 0;
+                comment = 0;
+                stackLi.pop();
+                count.pop();
+                break;
+              }
+              else
+                asterix = 0;
             }
           }
         }
-        stackLi.push(s);
-        count.push(i);
+        else
+        {
+          stackLi.pop();
+          count.pop();
+          comment = 0;
+          if(s == '(' || s == '{' || s == '[')
+          {
+            stackLi.push(s);
+            count.push(i);
+          }
+        }
       }
     }
     else
     {
-      if(s == ')' || s == '}' || s == ']' || s == '*')
+      if(s == ')' || s == '}' || s == ']')
       {
-        if(s == '*')
-        {
-          inf.get(s);
-          if(s == '/')
-          {
-            if(comment == 1)
-            {
-              comment = 0;
-              if(stackLi.isEmpty() || !checkIfPair(stackLi.top(), s))
-              {
-                cout << "Unmatched " << s << " on line #" << i << endl;
-                return;
-              }
-              else
-              {
-                stackLi.pop();
-                count.pop();
-              }
-            }
-            else
-            {
-              cout << "Unmatched */ on line #" << i << endl;
-              return;
-            }
-          }
-        }
-        if(comment == 0 && (s == ')' || s == '}' || s == ']'))
+        if(comment == 0)
         {
           cout << stackLi.top() << ' ' << s << endl;
           if(stackLi.isEmpty() || !checkIfPair(stackLi.top(), s))
