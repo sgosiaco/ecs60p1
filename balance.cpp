@@ -77,6 +77,11 @@ void RunListString(char* filename)
                 asterix = 0;
             }
           }
+          if(inf.eof())
+          {
+            cout << "Unmatched /* on line #" << count.topAndPop() << endl;
+            comment = 0;
+          }
         }
         else
         {
@@ -113,9 +118,12 @@ void RunListString(char* filename)
     }
   }
   if(comment == 1)
-    cout << "Unmatched /* on line #" << count.topAndPop() << endl;
+    cout << "Unmatched */ on line #" << count.topAndPop() << endl;
   if(stackLi.isEmpty())
     cout << "OK" << endl;
+  else
+    if(!count.isEmpty())
+      cout << "Unmatched " << stackLi.topAndPop() << " on line #" << count.topAndPop() << endl;
 
   inf.close();
 }
