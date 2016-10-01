@@ -97,7 +97,7 @@ void RunListString(char* filename)
       {
         if(comment == 0)
         {
-          cout << stackLi.top() << ' ' << s << endl;
+          //cout << stackLi.top() << ' ' << s << endl;
           if(stackLi.isEmpty() || !checkIfPair(stackLi.top(), s))
           {
             cout << "Unmatched " << s << " on line #" << i << endl;
