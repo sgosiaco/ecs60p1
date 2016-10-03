@@ -1,6 +1,6 @@
 #include <fstream>
+#include <iostream>
 #include <cstdlib>
-#include <cstdio>
 
 #include "StackLi.h"
 #include "QueueAr.h"
@@ -16,19 +16,19 @@ int main(int argc, char** argv)
   {
     ifstream inf(*(argv + 1));
     argc = atoi(*(argv + 2));
-    cout << argc << endl;
+    //cout << argc << endl;
     while(inf >> num)
     {
       if(stack.isEmpty() || stack.top()->isFull())
       {
-        cout << "new ";
+        //cout << "new ";
         stack.push(new Queue<int> (argc) );
       }
 
-      cout << num << ' ';
+      //cout << num << ' ';
       stack.top()->enqueue(num);
     }
-    cout << endl;
+    //cout << endl;
     inf.close();
     while(!stack.isEmpty())
     {
