@@ -7,7 +7,6 @@
 
 #include "StackLi.h"
 
-
 using namespace std;
 
 bool checkIfPair(char left, char right)
@@ -74,7 +73,8 @@ void RunListString(char* filename)
                 break;
               }
               else
-                asterix = 0;
+                if(s != '\n')
+                  asterix = 0;
             }
           }
           if(inf.eof())
