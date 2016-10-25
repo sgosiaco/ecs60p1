@@ -13,7 +13,7 @@ while ($ADT < 12)
     echo Running File{$fileNum}.dat once for ADT $ADT
     echo $ADT >> tt.tmp
 
-    if [ $ADT -eq 11 ]; then
+    if ( $ADT == 11 ) then
       echo 1000000 >> tt.tmp
 
       echo $ADT >> tt.tmp
@@ -29,11 +29,11 @@ while ($ADT < 12)
       echo 500 >> tt.tmp
       echo Load factor 0.5 1 10 100 1000 >> results
       echo HT Size 1000000 500000 50000 5000 500 >> results
-    fi
+    endif
 
     echo 0 >> tt.tmp
     echo -n File{$fileNum}  $ADT "  " >> results
-    a.out < tt.tmp | awk '/CPU/ {printf("%s     ", $6)}' >> results
+    timetest3.out < tt.tmp | awk '/CPU/ {printf("%s     ", $15)}' >> results
     echo " " >> results
     @ fileNum ++
   end # while more files
